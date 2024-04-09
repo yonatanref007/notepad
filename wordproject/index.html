@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="fonts.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="form__group">
+        <label for="fonts">Choose a title font:</label>
+        <select name="fonts" id="fonts">
+        
+        </select><br><br>
+    <input type="text" class="form__input" id="title" placeholder="Title" required="" /><br><br>
+
+
+    <label for="text_fonts">Choose a text font:</label>    
+    <select name="fonts" id="text_fonts"></select><br><br>
+    <textarea class="form__input_text" id="freeform" name="freeform" rows="10" cols="50" placeholder="Text input:"></textarea><br><br>
+    <button id="submit">Submit</button>    
+    </div>
+</body>
+<script src="fontArray.js"></script>
+<script src="changeFont.js"></script>
+
+
+
+<script>
+
+document.getElementById('submit').addEventListener("click", function() {
+    var title = document.getElementById('title').value;
+    var text = document.getElementById('freeform').value;
+    var titleFont = document.getElementById('fonts').value;
+    var textTFont = document.getElementById('text_fonts').value;
+    
+    exportHTML(title, text, titleFont, textTFont)
+});
+
+</script>
+
+<script>
+    function exportHTML(title, text, titleFont, textTFont){
+       var header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
+            "xmlns:w='urn:schemas-microsoft-com:office:word' "+
+            "xmlns='http://www.w3.org/TR/REC-html40'>"+
+            "<head><meta charset='utf-8'><title>Export HTML to Word Document with JavaScript</title></head><body>";
+       var footer = "</body></html>";
+       var sourceHTML = header +
+                "<h1 style='font-family: " + titleFont + "'>" + title + "</h1>" +
+                "<p style='font-family: " + textTFont + "'>" + text + "</p>" +
+                footer;
+
+       
+       var source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+       var fileDownload = document.createElement("a");
+       document.body.appendChild(fileDownload);
+       fileDownload.href = source;
+       fileDownload.download = 'document.doc';
+       fileDownload.click();
+       document.body.removeChild(fileDownload);
+    }
+</script>
+
+
+</html>
